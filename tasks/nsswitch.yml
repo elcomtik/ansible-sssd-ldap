@@ -12,3 +12,5 @@
     - services
     - netgroup
     - sudoers
+  notify: restart sssd
+
