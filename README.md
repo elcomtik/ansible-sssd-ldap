@@ -58,6 +58,7 @@ Role supports configuring multiple domains using following syntax:
         max_id:
         id_provider:
         auth_provider:
+        sudo_provider:
         ldap_uri:
         ldap_id_use_start_tls:
         ldap_tls_reqcert:
@@ -79,6 +80,9 @@ Role supports configuring multiple domains using following syntax:
         ldap_group_gid_number:
         ldap_group_member:
         ldap_tls_cacert:
+        sudo_search_base:
+        ldap_sudo_full_refresh_interval:
+        ldap_sudo_smart_refresh_interval:
 
 Add certificates from your files directory as you wish.
 Use their name later within the `ldap_tls_cacert` parameter.
