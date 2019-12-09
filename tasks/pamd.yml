@@ -11,3 +11,8 @@
   command: /usr/sbin/authconfig --enablemkhomedir --update
   changed_when: false
   when: ansible_os_family == "RedHat"
+
+- name: pamd | enable password auth for RedHat machines
+  command: /usr/sbin/authconfig --enablesssdauth --update
+  changed_when: false
+  when: ansible_os_family == "RedHat"

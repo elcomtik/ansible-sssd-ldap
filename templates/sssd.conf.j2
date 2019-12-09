@@ -8,6 +8,8 @@ debug_level = {{ sssd_defaults.debug_level }}
 filter_users = {{ sssd_nss.filter_users }}
 filter_groups = {{ sssd_nss.filter_users }}
 
+[pam]
+
 {% for domain in sssd_domains %}
 [domain/{{ domain.name }}]
 {# providers #}
