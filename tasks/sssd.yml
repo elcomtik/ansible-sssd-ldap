@@ -24,6 +24,7 @@
     - section: Service
       option: Restart
       value: always
+  when: ansible_service_mgr == 'systemd'
   notify: reload systemd config
 
 - name: sssd | ensure sssd service is enabled
