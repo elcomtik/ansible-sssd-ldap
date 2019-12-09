@@ -94,5 +94,9 @@ ldap_group_member = {{ domain.ldap_group_member }}
 {% if domain.ldap_tls_cacert is defined %}
 ldap_tls_cacert = {{ domain.ldap_tls_cacert }}
 {% endif %}
+{# custom cache credentials settings #}
+{% if domain.cache_credentials is defined %}
+cache_credentials = {{ domain.cache_credentials }}
+{% endif %}
 
 {% endfor %}
