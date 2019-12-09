@@ -10,6 +10,8 @@ filter_groups = {{ sssd_nss.filter_users }}
 
 [pam]
 
+[sudo]
+
 {% for domain in sssd_domains %}
 [domain/{{ domain.name }}]
 {# providers #}
@@ -97,6 +99,19 @@ ldap_tls_cacert = {{ domain.ldap_tls_cacert }}
 {# custom cache credentials settings #}
 {% if domain.cache_credentials is defined %}
 cache_credentials = {{ domain.cache_credentials }}
+{% endif %}
+{# custom sudo settings #}
+{% if domain.sudo_provider is defined %}
+sudo_provider = {{ domain.sudo_provider }}
+{% endif %}
+{% if domain.ldap_sudo_search_base is defined %}
+ldap_sudo_search_base = {{ domain.ldap_sudo_search_base }}
+{% endif %}
+{% if domain.ldap_sudo_full_refresh_interval is defined %}
+ldap_sudo_full_refresh_interval = {{ domain.ldap_sudo_full_refresh_interval }}
+{% endif %}
+{% if domain.ldap_sudo_smart_refresh_interval is defined %}
+ldap_sudo_smart_refresh_interval = {{ domain.ldap_sudo_smart_refresh_interval }}
 {% endif %}
 
 {% endfor %}

@@ -1,4 +1,15 @@
 ---
+- name: nsswitch | test for sudoers presence
+  shell: 'grep "^sudoers:" /etc/nsswitch.conf -c || true'
+  register: nsswitch_sudoers
+  changed_when: no
+
+- name: nsswitch | add sudoers line
+  lineinfile:
+    path: '/etc/nsswitch.conf'
+    line: 'sudoers:    files'
+  when: nsswitch_sudoers.stdout == "0"
+
 - name: nsswitch | enable sss
   replace:
     dest: /etc/nsswitch.conf
