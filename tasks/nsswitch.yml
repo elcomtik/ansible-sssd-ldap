@@ -1,21 +1,23 @@
 ---
 - name: nsswitch | test for sudoers presence
-  shell: 'grep "^sudoers:" /etc/nsswitch.conf -c || true'
+  shell: 'grep "^sudoers:" {{ sssd_ldap_nsswitch_conf_path }} -c || true'
   register: nsswitch_sudoers
   changed_when: no
 
 - name: nsswitch | add sudoers line
   lineinfile:
-    path: '/etc/nsswitch.conf'
+    path: "{{ sssd_ldap_nsswitch_conf_path }}" 
     line: 'sudoers:    files'
+  become: yes
   when: nsswitch_sudoers.stdout == "0"
 
 - name: nsswitch | enable sss
   replace:
-    dest: /etc/nsswitch.conf
+    path: "{{ sssd_ldap_nsswitch_conf_path }}"
     regexp: '^({{ item }}(?!.*\bsss\b).*)$'
     replace: '\1 sss'
     backup: yes
+  become : yes
   with_items:
     - passwd
     - group
@@ -24,4 +26,3 @@
     - netgroup
     - sudoers
   notify: restart sssd
-

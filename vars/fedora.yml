@@ -7,3 +7,5 @@ sssd_ldap_packages:
   - authconfig
 
 sssd_ldap_ssh_service: sshd
+
+sssd_ldap_nsswitch_conf_path: "/etc/nsswitch.conf"

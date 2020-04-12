@@ -9,3 +9,5 @@ sssd_ldap_packages:
   - libsss-sudo
 
 sssd_ldap_ssh_service: ssh
+
+sssd_ldap_nsswitch_conf_path: "/etc/nsswitch.conf"

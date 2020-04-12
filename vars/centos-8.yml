@@ -4,8 +4,9 @@ sssd_ldap_packages:
   - sssd-ldap
   - sudo
   - openssh-server
-  - authconfig
+  - authselect
+  - authselect-compat
 
 sssd_ldap_ssh_service: sshd
 
-sssd_ldap_nsswitch_conf_path: "/etc/nsswitch.conf"
+sssd_ldap_nsswitch_conf_path: "/etc/authselect/user-nsswitch.conf"
