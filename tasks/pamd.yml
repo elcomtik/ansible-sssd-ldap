@@ -10,9 +10,19 @@
 - name: pamd | add pam_mkhomedir for RedHat machines
   command: /usr/sbin/authconfig --enablemkhomedir --update
   changed_when: false
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"
 
 - name: pamd | enable password auth for RedHat machines
   command: /usr/sbin/authconfig --enablesssdauth --update
   changed_when: false
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"
+
+- name: autheselect | enable password auth & mkhomedir for Fedora machines
+  command: /usr/bin/authselect select sssd with-mkhomedir --force
+  changed_when: false
+  when:
+    - ansible_distribution == "Fedora"

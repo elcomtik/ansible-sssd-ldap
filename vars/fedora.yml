@@ -4,7 +4,8 @@ sssd_ldap_packages:
   - sssd-ldap
   - sudo
   - openssh-server
-  - authconfig
+  - authselect
+  - oddjob-mkhomedir
 
 sssd_ldap_ssh_service: sshd
 
