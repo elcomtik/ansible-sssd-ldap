@@ -11,16 +11,16 @@
     - defaults.yml
   tags: vars
 
-- include: packages.yml
+- import_tasks: packages.yml
 
-- include_tasks: certificates.yml
+- import_tasks: certificates.yml
   when: certificates is defined
 
-- include: sssd.yml
+- import_tasks: sssd.yml
 
-- include: nsswitch.yml
+- import_tasks: nsswitch.yml
 
-- include: pamd.yml
+- import_tasks: pamd.yml
 
-- include: sshd.yml
+- import_tasks: sshd.yml
 
