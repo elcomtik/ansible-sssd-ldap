@@ -26,3 +26,11 @@
   changed_when: false
   when:
     - ansible_distribution == "Fedora"
+
+- name: autheselect | enable oddjobd.service for Fedora machines
+  service:
+    name: "oddjobd.service"
+    state: "started"
+    enabled: true
+  when:
+    - ansible_distribution == "Fedora"
