@@ -19,8 +19,9 @@
 - import_tasks: sssd.yml
 
 - import_tasks: nsswitch.yml
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version is version('8', '<')) or
+        (ansible_os_family == "Debian")
 
 - import_tasks: pamd.yml
 
 - import_tasks: sshd.yml
-

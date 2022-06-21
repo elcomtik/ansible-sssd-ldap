@@ -7,30 +7,32 @@
   notify:
     - run pam auth update
 
-- name: pamd | add pam_mkhomedir for RedHat machines
+- name: pamd | add pam_mkhomedir for (legacy) RedHat machines
   command: /usr/sbin/authconfig --enablemkhomedir --update
   changed_when: false
   when:
     - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version is version('8', '<')
     - ansible_distribution != "Fedora"
 
-- name: pamd | enable password auth for RedHat machines
+- name: pamd | enable password auth for (legacy) RedHat machines
   command: /usr/sbin/authconfig --enablesssdauth --update
   changed_when: false
   when:
     - ansible_os_family == "RedHat"
+    - ansible_distribution_major_version is version('8', '<')
     - ansible_distribution != "Fedora"
 
-- name: autheselect | enable password auth & mkhomedir for Fedora machines
-  command: /usr/bin/authselect select sssd with-mkhomedir --force
+- name: autheselect | enable password auth & mkhomedir for RedHat machines
+  command: /usr/bin/authselect select sssd with-mkhomedir with-sudo --force
   changed_when: false
-  when:
-    - ansible_distribution == "Fedora"
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version is version('8', '>=')) or
+        (ansible_distribution == "Fedora")
 
-- name: autheselect | enable oddjobd.service for Fedora machines
+- name: autheselect | enable oddjobd.service for RedHat machines
   service:
     name: "oddjobd.service"
     state: "started"
     enabled: true
-  when:
-    - ansible_distribution == "Fedora"
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version is version('8', '>=')) or
+        (ansible_distribution == "Fedora")
