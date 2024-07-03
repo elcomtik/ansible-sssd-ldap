@@ -1,7 +1,7 @@
 ---
 - name: sssd | configure sssd
   become: true
-  template:
+  ansible.builtin.template:
     src: sssd.conf.j2
     dest: /etc/sssd/sssd.conf
     mode: 0600
@@ -13,7 +13,7 @@
 
 - name: update systemd service unit
   become: true
-  ini_file:
+  community.general.ini_file:
     path: /lib/systemd/system/sssd.service
     section: "{{ item.section }}"
     option: "{{ item.option }}"
@@ -31,6 +31,6 @@
 
 - name: sssd | ensure sssd service is enabled
   become: true
-  service:
+  ansible.builtin.service:
     name: sssd
     enabled: true

@@ -1,6 +1,6 @@
 ---
 - name: pamd | add pam_mkhomedir for Debian machines
-  copy:
+  ansible.builtin.copy:
     src: pam_mkhomedir
     dest: /usr/share/pam-configs/sssd_mkhomedir
   when: ansible_os_family == "Debian"
@@ -8,7 +8,7 @@
     - run pam auth update
 
 - name: pamd | add pam_mkhomedir for (legacy) RedHat machines
-  command: /usr/sbin/authconfig --enablemkhomedir --update
+  ansible.builtin.command: /usr/sbin/authconfig --enablemkhomedir --update
   changed_when: false
   when:
     - ansible_os_family == "RedHat"
@@ -16,7 +16,7 @@
     - ansible_distribution != "Fedora"
 
 - name: pamd | enable password auth for (legacy) RedHat machines
-  command: /usr/sbin/authconfig --enablesssdauth --update
+  ansible.builtin.command: /usr/sbin/authconfig --enablesssdauth --update
   changed_when: false
   when:
     - ansible_os_family == "RedHat"
@@ -25,14 +25,14 @@
 
 - name: autheselect | enable password auth & mkhomedir for RedHat machines
   become: true
-  command: /usr/bin/authselect select sssd with-mkhomedir with-sudo --force
+  ansible.builtin.command: /usr/bin/authselect select sssd with-mkhomedir with-sudo --force
   changed_when: false
   when: (ansible_os_family == "RedHat" and ansible_distribution_major_version is version('8', '>=')) or
         (ansible_distribution == "Fedora")
 
 - name: autheselect | enable oddjobd.service for RedHat machines
   become: true
-  service:
+  ansible.builtin.service:
     name: "oddjobd.service"
     state: "started"
     enabled: true

@@ -1,11 +1,11 @@
 ---
 - name: ensure certificate directory exists
-  file:
+  ansible.builtin.file:
     path: '{{ certificate_base_path }}'
     state: directory
 
 - name: copy certificates
-  copy:
+  ansible.builtin.copy:
     src: '{{ item }}'
     dest: '{{ certificate_base_path }}/{{ item }}'
   loop: '{{ certificates }}'

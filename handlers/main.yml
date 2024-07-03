@@ -1,13 +1,13 @@
 ---
 # handlers file for sssd_ldap
 - name: stop sssd
-  service:
+  ansible.builtin.service:
     name: sssd
     state: stopped
   listen: restart sssd
 
 - name: delete sssd cache
-  file:
+  ansible.builtin.file:
     path: "/var/lib/sss/db/{{ item }}"
     state: absent
   with_items:
@@ -18,21 +18,21 @@
   listen: restart sssd
 
 - name: start sssd
-  service:
+  ansible.builtin.service:
     name: sssd
     state: started
   listen: restart sssd
 
 - name: run pam auth update
-  shell: pam-auth-update --package
+  ansible.builtin.shell: pam-auth-update --package
 
 - name: restart sshd
-  service:
+  ansible.builtin.service:
     name: "{{ sssd_ldap_ssh_service }}"
     state: restarted
 
 - name: reload systemd config
-  systemd:
+  ansible.builtin.systemd_service:
     name: sssd
     state: restarted
     daemon_reload: yes

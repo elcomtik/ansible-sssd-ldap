@@ -1,13 +1,13 @@
 ---
 - name: packages | install packages
   become: true
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items: "{{ sssd_ldap_packages }}"
 
 - name: packages | ensure nscd is absent
   become: true
-  package:
+  ansible.builtin.package:
     name: nscd
     state: absent

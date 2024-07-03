@@ -1,18 +1,18 @@
 ---
 - name: nsswitch | test for sudoers presence
-  shell: 'grep "^sudoers:" {{ sssd_ldap_nsswitch_conf_path }} -c || true'
+  ansible.builtin.shell: 'grep "^sudoers:" {{ sssd_ldap_nsswitch_conf_path }} -c || true'
   register: nsswitch_sudoers
   changed_when: no
 
 - name: nsswitch | add sudoers line
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ sssd_ldap_nsswitch_conf_path }}" 
     line: 'sudoers:    files'
   become: yes
   when: nsswitch_sudoers.stdout == "0"
 
 - name: nsswitch | enable sss
-  replace:
+  ansible.builtin.replace:
     path: "{{ sssd_ldap_nsswitch_conf_path }}"
     regexp: '^({{ item }}(?!.*\bsss\b).*)$'
     replace: '\1 sss'
