@@ -1,5 +1,6 @@
 ---
 - name: sshd | enable authorized keys lookup script
+  become: true
   lineinfile:
     path: /etc/ssh/sshd_config
     line: 'AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys'
@@ -7,6 +8,7 @@
     - restart sshd
 
 - name: sshd | make authorized keys lookup script run as nobody
+  become: true
   lineinfile:
     path: /etc/ssh/sshd_config
     line: 'AuthorizedKeysCommandUser nobody'
@@ -14,11 +16,13 @@
     - restart sshd
 
 - name: sshd | ensure sshd service is enabled
+  become: true
   service:
     name: "{{ sssd_ldap_ssh_service }}"
     enabled: true
 
 - name: sshd | ensure sshd service is started
+  become: true
   service:
     name: "{{ sssd_ldap_ssh_service }}"
     state: started
