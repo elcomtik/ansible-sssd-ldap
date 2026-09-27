@@ -1,0 +1,10 @@
+---
+sssd_ldap_packages:
+  - sssd
+  - sssd-ldap
+  - sudo
+  - openssh-server
+  - authselect
+  - oddjob-mkhomedir
+
+sssd_ldap_ssh_service: sshd
